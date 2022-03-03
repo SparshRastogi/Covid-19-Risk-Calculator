@@ -3,22 +3,15 @@ import pandas as pd
 
 url = 'https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv'
 df = pd.read_csv(url)
-
 df.info()
 columns = df.columns
 usdata = df.loc[df['country_region'] == 'United States']
 usdata['date'] = pd.to_datetime(usdata['date'])
 usdata['year'] = usdata['date'].dt.year
 usdata['month'] = usdata['date'].dt.month
-
 mobility2021 = pd.DataFrame(usdata.loc[usdata['year'] == 2021])
-
-mobility2021
-
 county = list(usdata['census_fips_code'].unique())
-
 dfco = pd.DataFrame(columns = columns)
-
 for j in range(1,10):
   dfco = pd.DataFrame(columns = columns)
   for i in county:    
