@@ -5,7 +5,7 @@ url = 'https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv'
 df = pd.read_csv(url)
 
 df.info()
-
+columns = df.columns
 usdata = df.loc[df['country_region'] == 'United States']
 usdata['date'] = pd.to_datetime(usdata['date'])
 usdata['year'] = usdata['date'].dt.year
@@ -33,6 +33,7 @@ for j in range(1,10):
      fd = pd.merge(d,da,on = 'census_fips_code')
      objs = [dfco,fd]
      dfco = pd.concat(objs,axis = 0)
+     dfco.reset_index(drop = True,inplace = True)
      print(dfco)
-  name = '/content/drive/MyDrive/Colab Notebooks/Mobility 2021 Month' + str(j) +'.xlsx'
-  dfco.to_excel(name)
+name = '/content/drive/MyDrive/Colab Notebooks/Mobility 2021 Month' + str(j) +'.xlsx'
+dfco.to_excel(name)
