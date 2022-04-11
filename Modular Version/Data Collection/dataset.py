@@ -1,0 +1,13 @@
+def create_final_dataset(month,year)   
+   cases = pd.read_csv('https://raw.githubusercontent.com/SparshRastogi/Covid-19-Risk-Calculator/main/Cases%20{year}%20Month{month}.csv')
+   cases.rename(columns = {'fips':'FIPS CODE'}, inplace = True) 
+   mobility = pd.read_csv('https://raw.githubusercontent.com/SparshRastogi/Covid-19-Risk-Calculator/main/Mobility%20{year}%20Month{month}.csv')
+   mobility.rename(columns = {'census_fips_code':'FIPS CODE'}, inplace = True) 
+   vaccinations = pd.read_csv(f'https://raw.githubusercontent.com/SparshRastogi/Covid-19-Risk-Calculator/main/Vaccinations%20{year}%20Month{month}.csv')
+   vaccinations.rename(columns = {'FIPS':'FIPS CODE'}, inplace = True) 
+   populationdensity = pd.read_csv('https://raw.githubusercontent.com/SparshRastogi/Covid-19-Risk-Calculator/main/County%20Wise%20Population%20Density.csv')
+   dataset = pd.merge(populationdensity,cases,on = 'FIPS CODE',how = 'left')
+   dataset = pd.merge(dataset,mobility, on= 'FIPS CODE',how = 'left')
+   dataset = pd.merge(dataset,vaccinations,on = 'FIPS CODE',how = 'left')
+   name = '/content/drive/MyDrive/Colab Notebooks/Dataset 2021 Month' + str(i) + '.csv'
+   dataset.to_csv(name)
