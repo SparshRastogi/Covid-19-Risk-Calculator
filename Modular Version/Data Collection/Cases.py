@@ -2,9 +2,6 @@ import requests
 import pandas as pd
 
 df = pd.read_csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
-
-df.info()
-
 columns = df.columns
 
 df['date'] = pd.to_datetime(df['date'])
@@ -29,15 +26,11 @@ for j in range(1,10):
      cases = ['cases','deaths']     
      cases1 = ['FIPS CODE','cases','deaths']
      d = pd.DataFrame(cases2021.loc[(cases2021['FIPS CODE'] == i) & (cases2021['month'] == j)])
-     #print(d)
      d = d.drop((cases),axis=1)
      d = d.drop_duplicates(subset = 'FIPS CODE')
      da =pd.DataFrame(data[cases1].mean())
      da = da.transpose()
-     #print(da)
-     #o = [d,da]
      fd = pd.merge(d,da,on = 'FIPS CODE')
-     #print(fd)
      objs = [dfco,fd]
      dfco = pd.concat(objs,axis = 0)
      dfco.reset_index(drop = True,inplace = True)
